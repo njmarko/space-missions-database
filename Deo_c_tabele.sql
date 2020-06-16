@@ -1,40 +1,44 @@
+drop table kompmis;
+drop table misija;
+drop table odrediste;
+drop table kompanija;
+
 CREATE TABLE kompanija(
-	 Idk integer NOT NULL,
-	 Nak varchar(30) NOT NULL,
-	 Bud decimal(13, 2),
+	 Idk integer NOT NULL, --id
+	 Nak varchar(30) NOT NULL, --naziv kompanije
+	 Bud decimal(13, 2), --budzet kompanije
 	 CONSTRAINT kompanija_PK PRIMARY KEY (Idk),
-	 CONSTRAINT radnik_FK FOREIGN KEY (Sef) REFERENCES Radnik (Mbr),
-     	 CONSTRAINT radnik_CH  UNIQUE (Nap)
+     CONSTRAINT kompanija_CH  UNIQUE (Nak) --unikatan naziv
 );
 
 
 CREATE TABLE odrediste
 	(
-	 Ido integer  NOT NULL,
-	 Nao varchar(30),
-	 Uda decimal(14, 2),
+	 Ido integer  NOT NULL, --id
+	 Nao varchar(30), --naziv odredista
+	 Uda decimal(14, 2), --udaljenost od zemljine povrsine
 	 CONSTRAINT odrediste_PK PRIMARY KEY (Ido),
      CONSTRAINT odrediste_CH CHECK (Uda>=100) -- 100 km je Karmanova linija koja razgranicava zemljinu atmosferu od svemira
 );
 
 CREATE TABLE misija(
-	 Idm integer NOT NULL,
-	 Nam varchar(30) NOT NULL,
-     Ido integer  NOT NULL,
-     Dpo date NOT NULL,
-     Dza date,     
-	 CONSTRAINT misija_PK PRIMARY KEY (Idm),
+	 Idm integer NOT NULL, --id
+	 Nam varchar(30) NOT NULL, -- naziv misije
+     Ido integer  NOT NULL, -- id odredista
+     Dpo date NOT NULL, --datum polaska
+     Dza date,     --datum zavrsetka
+	 CONSTRAINT misija_PK PRIMARY KEY (Idm), 
 	 CONSTRAINT misija_FK FOREIGN KEY (Ido) REFERENCES Odrediste (Ido),
-     CONSTRAINT radnik_CH  UNIQUE (Nam)
+     CONSTRAINT misija_CH  UNIQUE (Nam) --unikatan naziv
 );
 
 
-CREATE TABLE radproj
+CREATE TABLE kompmis
 	(
-	 Spr integer NOT NULL,
-	 Mbr integer NOT NULL,
-	 Brc integer NOT NULL,
-	 CONSTRAINT radproj_PK PRIMARY KEY (Spr, Mbr),
-	 CONSTRAINT radproj_rad_FK FOREIGN KEY (Mbr) REFERENCES radnik(Mbr),
-	 CONSTRAINT radproj_prj_FK FOREIGN KEY (Spr) REFERENCES projekat(Spr)
+	 Idk integer NOT NULL, --id kompanije
+	 Idm integer NOT NULL, --id misije
+	 Inv decimal(13, 2), --investicija kompanije u misiju
+	 CONSTRAINT kompmis_PK PRIMARY KEY (Idk, Idm),
+	 CONSTRAINT kompmis_idk_FK FOREIGN KEY (Idk) REFERENCES Kompanija(Idk),
+	 CONSTRAINT kompmis_idm_FK FOREIGN KEY (Idm) REFERENCES Misija(Idm)
 );
