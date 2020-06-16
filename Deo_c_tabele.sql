@@ -6,7 +6,7 @@ drop table kompanija;
 CREATE TABLE kompanija(
 	 Idk integer NOT NULL, --id
 	 Nak varchar(30) NOT NULL, --naziv kompanije
-	 Bud decimal(13, 2), --budzet kompanije
+	 Bud decimal(15, 2), --budzet kompanije
 	 CONSTRAINT kompanija_PK PRIMARY KEY (Idk),
      CONSTRAINT kompanija_CH  UNIQUE (Nak) --unikatan naziv
 );
@@ -16,7 +16,7 @@ CREATE TABLE odrediste
 	(
 	 Ido integer  NOT NULL, --id
 	 Nao varchar(30), --naziv odredista
-	 Uda decimal(14, 2), --udaljenost od zemljine povrsine
+	 Uda decimal(15, 2), --udaljenost od zemljine povrsine
 	 CONSTRAINT odrediste_PK PRIMARY KEY (Ido),
      CONSTRAINT odrediste_CH CHECK (Uda>=100) -- 100 km je Karmanova linija koja razgranicava zemljinu atmosferu od svemira
 );
@@ -37,7 +37,7 @@ CREATE TABLE kompmis
 	(
 	 Idk integer NOT NULL, --id kompanije
 	 Idm integer NOT NULL, --id misije
-	 Inv decimal(13, 2), --investicija kompanije u misiju
+	 Inv decimal(15, 2), --investicija kompanije u misiju
 	 CONSTRAINT kompmis_PK PRIMARY KEY (Idk, Idm),
 	 CONSTRAINT kompmis_idk_FK FOREIGN KEY (Idk) REFERENCES Kompanija(Idk),
 	 CONSTRAINT kompmis_idm_FK FOREIGN KEY (Idm) REFERENCES Misija(Idm)
