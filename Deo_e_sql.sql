@@ -44,8 +44,49 @@ from kompanija where idk not in (select unique idk from kompmis);
 
 
 --5. Primer visestrukog unutrasnjeg spajanja tabela
-select m.nam as "Naziv misije" ,k.nak as "Naziv kompanije",km.inv,o.nao
+--prikazuju se relevantni podaci o kompanijama koje ucestvuju u misijama
+--prikaz je sortiran po nazivu misije i visini investicije kompanije u datu misiju
+select m.nam as "Naziv misije" ,k.nak as "Naziv kompanije",km.inv as "Investicija",o.nao as "Odrediste"
 from kompanija k inner join kompmis km on k.idk =km.idk
 inner join misija m on km.idm=m.idm
 inner join odrediste o on m.ido=o.ido
 order by m.nam asc,km.inv desc;
+
+
+--6. primer grupisanja podataka uz koriš?enje agregacionih funkcija i filtriranja dobijenih grupa
+--grupisanje misija i racunanje sume svih investicija 
+--kod kojih je ukupna ulozena suma novca veca od prosecne ulozene sume novca u misije
+select km.idm as "Id misije",m.nam as "Naziv misije",sum(inv) as "Ukupno investirano" from kompmis km
+join misija m on m.idm = km.idm
+group by km.idm,m.nam
+having sum(inv)>=(select avg(sum(inv)) from kompmis group by idm)
+order by sum(inv);
+
+--pronalazenje misije u koju je investiralo najvise kompanija
+select km.idm as "Id misije",m.nam as "Naziv misije",count(inv) as "Broj investicija" from kompmis km
+join misija m on m.idm = km.idm
+group by km.idm,m.nam
+having count(inv)>=(select max(count(inv)) from kompmis group by idm);
+
+--7. primer upotrebe SQL klauzule WITH i spajanja tabela
+-- Za svaku kompaniju angazovanu na projektu, odrediti broj ostalih kompanija angazovanih na projektu
+with misija_info as(
+select km.idm,m.nam as naziv_misije,count(km.idk) as komp_broj
+from kompmis km inner join misija m on km.idm=m.idm
+group by km.idm,m.nam)
+select k.idk as "Id kompanije",k.nak as "Naziv kompanije",km.idm as "Id misije",
+mi.naziv_misije as "Naziv misije",mi.komp_broj - 1 "Broj ostalih kompanija"
+from kompanija k,kompmis km,misija_info mi
+where k.idk=km.idk and km.idm=mi.idm
+order by k.idk,km.idm;
+
+--8. primer kreiranja pogleda uz koriš?enje spoljašnjeg spajanja tabela
+-- Pogled koji prikazuje informacije o odredistu, kao i broj misija za to odrediste
+create or replace view odrediste_br_misija(Ido,Nao,Uda,br_misija,ukupno_km) as
+select o.ido,o.nao,o.uda,count(m.ido),o.uda*count(m.ido)
+from odrediste o left outer join misija m on o.ido=m.ido
+group by o.ido,o.nao,o.uda;
+
+
+
+
