@@ -64,3 +64,5 @@ insert into kompmis values (50, 140,12000000000);
 insert into kompmis values (70, 140,5000000000);
 insert into kompmis values (60, 140,5000000000);
 insert into kompmis values (110, 140,2000000000);
+
+commit;
