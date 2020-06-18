@@ -1,6 +1,9 @@
 --1. primer izmene definicije odabrane tabele. Budzet ne sme biti null, i default vrednost je 0
 alter table kompanija
 modify bud decimal(15, 2) default 0 not null;
+--uvecan broj karaktera na 50 kod naziva misije
+alter table misija
+modify nam varchar(50) NOT NULL;
 
 --2. uvecanje budzeta kompanija. Prvo budzed uvecaju nasa i spacex pre izbijanja korone, a druge kompanije pokusaju da ih sustignu.
 -- Zbog izbijanja korone i finansijskih poteskoca, ostale kompanije moraju da vrate budzet na staru vrednost
