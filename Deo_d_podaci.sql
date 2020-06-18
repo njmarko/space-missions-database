@@ -50,7 +50,7 @@ insert into odrediste values (SEQ_Ido.nextval, 'ISS',     408.00);
 
 --dodavanje podataka o misijama (idm, nam,ido,dpo,dza)
 insert into misija values (SEQ_Idm.nextval, 'Apolo 11',30,'16-jul-1969','24-jul-1969');
-insert into misija values (SEQ_Idm.nextval, 'Crew Dragon Demo 2',130,'30-may-2020',NULL);
+insert into misija values (SEQ_Idm.nextval, 'Crew Dragon Demo 2',140,'30-may-2020',NULL);
 insert into misija values (SEQ_Idm.nextval, 'Artemis',30,'12-jun-2024',NULL);
 insert into misija values (SEQ_Idm.nextval, 'Change 3',30,'02-dec-2013','14-dec-2013');
 insert into misija values (SEQ_Idm.nextval, 'Change 4',30,'07-dec-2018','03-jan-2018');
@@ -61,8 +61,8 @@ insert into misija values (SEQ_Idm.nextval, 'Mariner 4',40,'28-nov-1964','21-dec
 insert into misija values (SEQ_Idm.nextval, 'Mars 3',40,'28-may-1971','2-dec-1971');
 insert into misija values (SEQ_Idm.nextval, 'Opportunity',40,'08-jul-2003','13-feb-2019');
 insert into misija values (SEQ_Idm.nextval, 'Venera 8',20,'27-mar-1972','22-jul-1972');
-insert into misija values (SEQ_Idm.nextval, 'Europa Clipper',90,'13-mar-2024',NULL);
-insert into misija values (SEQ_Idm.nextval, 'ISS programme',130,'13-mar-2024',NULL);
+insert into misija values (SEQ_Idm.nextval, 'Europa Clipper',100,'13-mar-2024',NULL);
+insert into misija values (SEQ_Idm.nextval, 'ISS programme',140,'13-mar-2024',NULL);
 
 --dodavanje podataka o kompanijama koje ucestvuju u misijama (Idk,Idm,Inv)
 insert into kompmis values (40, 10,25400000000);

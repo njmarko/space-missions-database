@@ -1,12 +1,14 @@
 /*triger tipa ROW-LEVEL koji name?e neko smisleno, netrivijalno ograni?enje nad
 podacima u relacionoj bazi podataka.*/
 
+--triger koji se kativira prilikom dodavanja nove misije ili prilikom azuriranja
+--polja idm,dpo,dza. Ovaj trigger ne dozvoljava da datum pocetka dodje nakon datuma zavrsetka
+--Trigger takodje dodeljuje vrednost kljuca pomocu sekvence i ne dozvoljava izmenu kljuca
 create or replace trigger tr_misija_INSUPD_idm
 before insert or update of idm,dpo,dza
 on misija
 for each row
 begin
-
     if inserting then
         --uvek se dodeljuje sledeci kljuc u sekvenci nezavisno od toga sta je korisnik uneo
         select SEQ_Idm.nextval into :new.idm from sys.dual; -- dual tabela je dummy tabela

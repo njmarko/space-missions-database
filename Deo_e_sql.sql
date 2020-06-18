@@ -1,4 +1,4 @@
---1. dodavanje ogranicenja za tabelu kompanija. Budzet ne sme biti null, i default vrednost je 0
+--1. primer izmene definicije odabrane tabele. Budzet ne sme biti null, i default vrednost je 0
 alter table kompanija
 modify bud decimal(15, 2) default 0 not null;
 
@@ -10,7 +10,7 @@ savepoint izbijanje_epidemije;
 update kompanija
 set bud = bud * 1.15 where nak not in ('NASA','SpaceX');
 rollback to izbijanje_epidemije; --zbog krize moraju da se vrate budzeti
-update  kompanija --spacex dobija poslove udoba krize pa moze da uveca budzet; Kinezi su prebrodili koronu i zele da pariraju Americi
+update  kompanija --spacex dobija poslove u doba krize pa moze da uveca budzet; Kinezi su prebrodili koronu i zele da pariraju Americi
 set bud = bud*1.15 where nak in ('SpaceX','CNSA'); 
 commit;
 
@@ -86,6 +86,9 @@ create or replace view odrediste_br_misija(Ido,Nao,Uda,br_misija,ukupno_km) as
 select o.ido,o.nao,o.uda,count(m.ido),o.uda*count(m.ido)
 from odrediste o left outer join misija m on o.ido=m.ido
 group by o.ido,o.nao,o.uda;
+
+--primer upotreba pogleda za racunanje ukupne kilometraze na svim misijama
+select sum(obm.ukupno_km) as "Ukupno predjeno km" from odrediste_br_misija obm;
 
 
 
